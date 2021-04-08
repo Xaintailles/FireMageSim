@@ -23,20 +23,28 @@ class spell:
         self.crit_modifier = crit_modifier
 
 def cast_spell(player: player, spell: spell):
-    
-    was_crit = 0
-    was_not_crit = 1   
-    roll = random.randrange(0,10000)
+
     damage = spell.spell_power_modifier * player.spell_power
-    
-    if spell.crit_chance <= roll:
-        was_crit = 1
-        was_not_crit = 0
-        damage = damage * spell.crit_modifier
+    roll = random.randrange(0,10000)
+       
+    if spell.crit_chance >= roll:
+        spell_state = 'cc'
+        damage = spell.spell_power_modifier * player.spell_power * spell.crit_modifier
+    else:
+        spell_state = 'nc'
+        
+    if
     
     return {  'cast_time': spell.cast_time
             , 'damage_done': damage
-            , 'was_crit': was_crit
-            , 'was_not_crit': was_not_crit
+            , 'spell_state': spell_state
+            , 'roll': roll
             }
     
+def crit_counter_check(crit_counter: int, previous_spell_state: str):
+    if previous_spell_state == 'cc':
+        crit_counter += 1
+    else:
+        crit_counter = 0
+    
+    return crit_counter

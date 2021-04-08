@@ -24,11 +24,11 @@ spells['pyroblast'] = u.spell(Xaint.crit_rating,1.363,0,0,4.5,2)
 while time < 60:
     print('cast fireball')
     d = u.cast_spell(Xaint, spells['fireball'])
+    crit_counter = u.crit_counter_check(crit_counter, d['spell_state'])
     
     total_damage += d['damage_done']
     time += d['cast_time']
     
-    crit_counter += d['was_crit']
     if d['was_not_crit'] == 1:
         crit_counter = 0
     
@@ -46,3 +46,9 @@ while time < 60:
             crit_counter = 0
 
 print('total_damage = {}, duration = {}, dps = {}'.format(total_damage,time,total_damage / time))
+
+
+
+print('cast fireball')
+d = u.cast_spell(Xaint, spells['fireball'])
+crit_counter = u.crit_counter_check(crit_counter, d['spell_state'])
