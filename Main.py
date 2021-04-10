@@ -5,50 +5,8 @@ Created on Wed Apr  7 10:12:48 2021
 @author: Gebruiker
 """
 
-import random
 import utilities as u
 
+p_xaint = u.player(4000, 3100, 650)
 
-        
-      
-crit_counter = 0
-time = 0
-gcd = 1
-total_damage = 0
-       
-Xaint = u.player(3500,3097,2253)
-spells = {}
-spells['fireball'] = u.spell(Xaint.crit_rating,0.65,0,0,2.25,2)
-spells['pyroblast'] = u.spell(Xaint.crit_rating,1.363,0,0,4.5,2)
-
-while time < 60:
-    print('cast fireball')
-    d = u.cast_spell(Xaint, spells['fireball'])
-    crit_counter = u.crit_counter_check(crit_counter, d['spell_state'])
-    
-    total_damage += d['damage_done']
-    time += d['cast_time']
-    
-    if d['was_not_crit'] == 1:
-        crit_counter = 0
-    
-    if crit_counter == 2:
-        print('cast pyroblast')
-        
-        d = u.cast_spell(Xaint, spells['pyroblast'])
-        
-        total_damage += d['damage_done']
-        time += d['cast_time']
-        
-        crit_counter = 0
-        crit_counter += d['was_crit']
-        if d['was_not_crit'] == 1:
-            crit_counter = 0
-
-print('total_damage = {}, duration = {}, dps = {}'.format(total_damage,time,total_damage / time))
-
-
-
-print('cast fireball')
-d = u.cast_spell(Xaint, spells['fireball'])
-crit_counter = u.crit_counter_check(crit_counter, d['spell_state'])
+test = u.run_a_sim(60,p_xaint)
